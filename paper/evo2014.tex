@@ -1,0 +1,105 @@
+\documentclass{llncs}
+%
+\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+\usepackage{amsmath,epsfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{subfigure}
+\usepackage{multirow}
+\usepackage{url}
+
+
+\begin{document}
+\title{ Unreliable Heterogeneous Workers in EvoSpace }
+%
+\titlerunning{Unreliable Heterogeneous Workers in EvoSpace}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{--}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+The abstract should summarize the contents of the paper
+using at least 70 and at most 150 words. It will be set in 9-point
+font size and be inset 1.0 cm from the right and left margins.
+There will be two blank lines before and after the Abstract. \dots
+\keywords{computational geometry, graph theory, Hamilton cycles}
+\end{abstract}
+%
+\section{Fixed-Period Problems: The Sublinear Case}
+%
+With this chapter, the preliminaries are over, and we begin the search
+for periodic solutions to Hamiltonian systems. All this will be done in
+the convex case; that is, we shall study the boundary-value problem
+\begin{eqnarray*}
+  \dot{x}&=&JH' (t,x)\\
+  x(0) &=& x(T)
+\end{eqnarray*}
+with $H(t,\cdot)$ a convex function of $x$, going to $+\infty$ when
+$\left\|x\right\| \to \infty$.
+
+%
+\subsection{Autonomous Systems}
+%
+In this section, we will consider the case when the Hamiltonian $H(x)$
+is autonomous. For the sake of simplicity, we shall also assume that it
+is $C^{1}$.
+
+\paragraph{Notes and Comments.}
+The first results on subharmonics were
+obtained by Rabinowitz in \cite{rab}, who showed the existence of
+infinitely many subharmonics both in the subquadratic and superquadratic
+case, with suitable growth conditions on $H'$. Again the duality
+approach enabled Clarke and Ekeland in \cite{clar:eke:2} to treat the
+same problem in the convex-subquadratic case, with growth conditions on
+$H$ only.
+
+Recently, Michalek and Tarantello (see \cite{mich:tar} and \cite{tar})
+have obtained lower bound on the number of subharmonics of period $kT$,
+based on symmetry considerations and on pinching estimates, as in
+Sect.~5.2 of this article.
+
+%
+% ---- Bibliography ----
+%
+\begin{thebibliography}{5}
+%
+\bibitem {clar:eke}
+Clarke, F., Ekeland, I.:
+Nonlinear oscillations and
+boundary-value problems for Hamiltonian systems.
+Arch. Rat. Mech. Anal. 78, 315--333 (1982)
+
+\bibitem {clar:eke:2}
+Clarke, F., Ekeland, I.:
+Solutions p\'{e}riodiques, du
+p\'{e}riode donn\'{e}e, des \'{e}quations hamiltoniennes.
+Note CRAS Paris 287, 1013--1015 (1978)
+
+\bibitem {mich:tar}
+Michalek, R., Tarantello, G.:
+Subharmonic solutions with prescribed minimal
+period for nonautonomous Hamiltonian systems.
+J. Diff. Eq. 72, 28--55 (1988)
+
+\bibitem {tar}
+Tarantello, G.:
+Subharmonic solutions for Hamiltonian
+systems via a $\bbbz_{p}$ pseudoindex theory.
+Annali di Matematica Pura (to appear)
+
+\bibitem {rab}
+Rabinowitz, P.:
+On subharmonic solutions of a Hamiltonian system.
+Comm. Pure Appl. Math. 33, 609--633 (1980)
+
+\end{thebibliography}
+
+\end{document}
