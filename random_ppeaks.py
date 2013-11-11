@@ -14,6 +14,10 @@ creator.create("Individual", list, fitness=creator.FitnessMax)
 
 PEAKS = None #GLOBAL Set in work()
 
+MUTPB = random.random()
+CXPB  = random.random()
+SAMPLE_SIZE = random.randint(12,24)
+
 def evalPeaks(individual):
     global PEAKS
     return peaks.p_peaks(individual, PEAKS),
@@ -45,26 +49,17 @@ def initialize(config):
     server.putSample(init_pop)
 
 
+
+####
 def get_sample(config):
-    for attempts in range(3):
-        try:
-            server = jsonrpclib.Server(config["SERVER"])
-            sample = server.getSample(config["SAMPLE_SIZE"])
-            return sample
-        except jsonrpclib.ProtocolError as err:
-            print "Error %s" % err
-
-
+    server = jsonrpclib.Server(config["SERVER"])
+    sample =  server.getSample(SAMPLE_SIZE)
+    return sample
 
 
 def put_sample(config,sample):
-    for attempts in range(3):
-        try:
-            server = jsonrpclib.Server(config["SERVER"])
-            server.putSample(sample)
-            break
-        except jsonrpclib.ProtocolError as err:
-            print "Error %s" % err
+    server = jsonrpclib.Server(config["SERVER"])
+    server.putSample(sample)
 
 
 def evolve(sample_num, config):
@@ -97,13 +92,13 @@ def evolve(sample_num, config):
 
         # Apply crossover and mutation on the offspring
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
-            if random.random() < config["CXPB"]:
+            if random.random() < CXPB:
                 toolbox.mate(child1, child2)
                 del child1.fitness.values
                 del child2.fitness.values
 
         for mutant in offspring:
-            if random.random() < config["MUTPB"]:
+            if random.random() < MUTPB:
                 toolbox.mutate(mutant)
                 del mutant.fitness.values
 

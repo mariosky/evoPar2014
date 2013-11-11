@@ -1,6 +1,6 @@
 __author__ = 'mariosky'
 
-import ppeaks
+import ppeaks, random_ppeaks
 import cloud, time, yaml
 
 
