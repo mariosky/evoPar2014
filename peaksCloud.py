@@ -6,7 +6,6 @@ import cloud, time, yaml
 
 config = yaml.load(open("conf/conf.yaml"))
 
-
 experiment = "w%d-%d-p%d" % (config["NUMBER_OF_WORKERS"], config["RETURN_RATE"]*100,config["POPULATION_SIZE"])
 experiment_id = experiment + "-%d" % round(time.time(),0)
 

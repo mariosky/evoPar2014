@@ -35,7 +35,7 @@ TO DO
 Information technology has become ubiquitous in today's world, sources of computing power range from personal computers and smart-devices to massive data centers. Users can now access vast computational resources available on the Internet using diverse technologies, including cloud computing, peer-to-peer (P2P), and http-based environments. This trend can favor Evolutionary Computation (EC) algorithms as these can be designed as parallel, distributed, and asynchronous systems.
 Several Evolutionary Algorithms (EA) have been proposed that distribute the evolutionary process among heterogeneous devices, not only among controlled  nodes in a in-house cluster or grid but also those out side the data center in  users' web browsers and smart phones or external cloud based virtual machines. This reach out approach allows researchers the use of low cost computational power that would not be available otherwise, but on the other hand, have the challenge to manage heterogeneous unreliable computing resources. Lost connections, low bandwidth communications, abandoned work, security and privacy issues are all common? in these settings. 
 
-In this paper the effect of node unavailability in algorithms using the EvoSpace population storage is assessed. EvoSpace[] is a framework (that aims?) to implement evolutionary algorithms (EA) using heterogeneous and unreliable resources. EvoSpace is based on Linda's tuple space [], a coordination model where each node asynchronously pulls its work from a central shared memory. The core element of EvoSpace is a central repository for the evolving population, that has no knowledge about the evolutionary process. Remote clients, which are here called EvoWorkers, pull random samples of the population to perform on them the basic evolutionary processes (selection, variation and survival), once the work is done, the modified sample is pushed back to the central population. This model contrasts with  the use of a global queue of tasks and implementations of map-reduce algorithms, recently favored in other proposals. Following the tuple space model, when individuals are pulled from the EvoSpace container these are removed from it, so no other EvoWorker could work on them. This design decision has several known benefits relevant to concurrency control in distributed systems, and also is an effective way of distributing the workload. Leaving a copy of the individual in the population server free to be pulled by other EvoWorkers will result in redundant work and this could be costly if the task at hand is time consuming. EvoWorkers are expected to be unreliable, as they can loose a connection or are simply shut down or removed from the client. When an EvoWorker is lost, so are the individuals pulled from the repository. Depending on the type of algorithm been executed, the lost of these samples could have high cost. To address the problem of unreliable EvoWorkers, EvoSpace uses a (simple?) re-insertion mechanism that also prevents the starvation of the population pool. Other pool based algorithms normally use a random insertion technique, but we argue this could negatively impact the outcome of the algorithm (??). This work evaluates the (effect?) of the re-insertion model on the total running time and number of evaluations of a genetic algorithm used to solve a benchmark problem from the P-Peaks problem generator. We compare both approaches: (i) the re-insertion previous individuals at the cost of keeping copies of samples, and (ii) inserting  randomly generated individuals, with the sometimes beneficial cost of adding diversity to the population. For this experiments we use the same (configuration settings?) as an earlier work, in order to compare the performance of the algorithm in similar conditions.
+In this paper the effect of node unavailability in algorithms using the EvoSpace population storage is assessed. EvoSpace \cite{Evospace,FreeLunch}is a framework (that aims?) to implement evolutionary algorithms (EA) using heterogeneous and unreliable resources. EvoSpace is based on Linda's tuple space \cite{Evospace}, a coordination model where each node asynchronously pulls its work from a central shared memory. The core element of EvoSpace is a central repository for the evolving population, that has no knowledge about the evolutionary process. Remote clients, which are here called EvoWorkers, pull random samples of the population to perform on them the basic evolutionary processes (selection, variation and survival), once the work is done, the modified sample is pushed back to the central population. This model contrasts with  the use of a global queue of tasks and implementations of map-reduce algorithms, recently favored in other proposals. Following the tuple space model, when individuals are pulled from the EvoSpace container these are removed from it, so no other EvoWorker could work on them. This design decision has several known benefits relevant to concurrency control in distributed systems, and also is an effective way of distributing the workload. Leaving a copy of the individual in the population server free to be pulled by other EvoWorkers will result in redundant work and this could be costly if the task at hand is time consuming. EvoWorkers are expected to be unreliable, as they can loose a connection or are simply shut down or removed from the client. When an EvoWorker is lost, so are the individuals pulled from the repository. Depending on the type of algorithm been executed, the lost of these samples could have high cost. To address the problem of unreliable EvoWorkers, EvoSpace uses a (simple?) re-insertion mechanism that also prevents the starvation of the population pool. Other pool based algorithms normally use a random insertion technique, but we argue this could negatively impact the outcome of the algorithm (??). This work evaluates the (effect?) of the re-insertion model on the total running time and number of evaluations of a genetic algorithm used to solve a benchmark problem from the P-Peaks problem generator. We compare both approaches: (i) the re-insertion previous individuals at the cost of keeping copies of samples, and (ii) inserting  randomly generated individuals, with the sometimes beneficial cost of adding diversity to the population. For this experiments we use the same (configuration settings?) as an earlier work, in order to compare the performance of the algorithm in similar conditions.
 EvoSpace was implemented as a web service on the popular Heroku platform and EvoWorkers where simulated using PiCloud, a scientific computing PaaS. 
 
 The remainder of the paper proceeds as follows. Section \ref{sec:work} reviews related work. Afterwards, Section \ref{sec:evo} briefly describes the proposed EvoSpace framework and gives implementation details the re-insertion process.
@@ -44,7 +44,7 @@ Finally, a summary and concluding remarks are in Section \ref{sec:conclusions}.
 
 \section{Related Work}
 \label{sec:work}
-Using available Internet resources for EC has been the focus of recent research in the field. The use of volunteer computing using BOINC open source software is used by Smaoui et al. (2009) in this case BOINC uses redundancy to deal with the volatility of nodes and unreliability of their results. In their work, each BOINC work unit consisted of a fitness evaluation task and multiple replicas were produced and sent to different clients, later when outputs were received a validation step ensured all outputs match. In case of a discrepancy or a time-out from a client, a new job replica was created and sent to another client. The main drawback of this approach was that the master-worker algorithm used was synchronous, so the process had to wait for all jobs to continue to the next generation. Web browsers were used by Merelo et al. [] using Javascript to implement the algorithm, this has the advantage of not requiring the installation of additional software. In this work the server receives an Ajax request with the best individual obtained from the local evolution in clients, and then responds with additional parameters and the best individual in the population so far. If a client is disconnected no special measures are taken. Several cloud-based EC solutions are based on a  global queue of tasks and a Map-Reduce implementation which normally handles failures by the re-execution of tasks. 
+Using available Internet resources for EC has been the focus of recent research in the field. The use of volunteer computing using BOINC open source software is used by Smaoui et al.  \cite{FekiNG09} in this case BOINC uses redundancy to deal with the volatility of nodes and unreliability of their results. In their work, each BOINC work unit consisted of a fitness evaluation task and multiple replicas were produced and sent to different clients, later when outputs were received a validation step ensured all outputs match. In case of a discrepancy or a time-out from a client, a new job replica was created and sent to another client. The main drawback of this approach was that the master-worker algorithm used was synchronous, so the process had to wait for all jobs to continue to the next generation. Web browsers were used by Merelo et al. [] using Javascript to implement the algorithm, this has the advantage of not requiring the installation of additional software. In this work the server receives an Ajax request with the best individual obtained from the local evolution in clients, and then responds with additional parameters and the best individual in the population so far. If a client is disconnected no special measures are taken. Several cloud-based EC solutions are based on a  global queue of tasks and a Map-Reduce implementation which normally handles failures by the re-execution of tasks \cite{fazenda2012,di2013towards,FlexGP}. 
 
 %% Lo que hice arriba es ir comparando la técnica de failover de cada
 %% propuesta me faltan las de abajo 
@@ -185,41 +185,11 @@ Number of Executions & 30 \\
 
 
 
-
 %
 % ---- Bibliography ----
-%
-\begin{thebibliography}{5}
-%
-\bibitem {clar:eke}
-Clarke, F., Ekeland, I.:
-Nonlinear oscillations and
-boundary-value problems for Hamiltonian systems.
-Arch. Rat. Mech. Anal. 78, 315--333 (1982)
-
-\bibitem {clar:eke:2}
-Clarke, F., Ekeland, I.:
-Solutions p\'{e}riodiques, du
-p\'{e}riode donn\'{e}e, des \'{e}quations hamiltoniennes.
-Note CRAS Paris 287, 1013--1015 (1978)
-
-\bibitem {mich:tar}
-Michalek, R., Tarantello, G.:
-Subharmonic solutions with prescribed minimal
-period for nonautonomous Hamiltonian systems.
-J. Diff. Eq. 72, 28--55 (1988)
-
-\bibitem {tar}
-Tarantello, G.:
-Subharmonic solutions for Hamiltonian
-systems via a $\bbbz_{p}$ pseudoindex theory.
-Annali di Matematica Pura (to appear)
-
-\bibitem {rab}
-Rabinowitz, P.:
-On subharmonic solutions of a Hamiltonian system.
-Comm. Pure Appl. Math. 33, 609--633 (1980)
-
-\end{thebibliography}
+\bibliographystyle{abbrv}
+\begin{footnotesize}
+\bibliography{biblio}
+\end{footnotesize}
 
 \end{document}

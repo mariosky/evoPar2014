@@ -1,2 +1,6 @@
 *.pyc
 *.idea
+*.bbl
+*.aux
+*.log
+*.ps
