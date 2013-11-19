@@ -3,7 +3,7 @@ __author__ = 'mariosky'
 from pylab import *
 import os
 
-WORKERS = '_w8'
+WORKERS = '_w16'
 
 file_names = [file_name for file_name in os.listdir('.') if file_name.startswith(WORKERS) and file_name.endswith('p512.dat') ]
 opened_files = map(open, file_names)
