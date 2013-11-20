@@ -5,45 +5,45 @@ The style file: abbrv.bst
 Database file #1: biblio.bib
 Warning--I'm ignoring di2013towards's extra "pages" field
 --line 195 of file biblio.bib
-You've used 11 entries,
+You've used 12 entries,
             2118 wiz_defined-function locations,
-            591 strings with 7104 characters,
-and the built_in function-call counts, 5792 in all, are:
-= -- 546
-> -- 327
-< -- 12
-+ -- 122
-- -- 109
-* -- 441
-:= -- 902
-add.period$ -- 39
-call.type$ -- 11
-change.case$ -- 72
+            597 strings with 7395 characters,
+and the built_in function-call counts, 6364 in all, are:
+= -- 601
+> -- 355
+< -- 13
++ -- 133
+- -- 119
+* -- 479
+:= -- 983
+add.period$ -- 42
+call.type$ -- 12
+change.case$ -- 80
 chr.to.int$ -- 0
-cite$ -- 11
-duplicate$ -- 229
-empty$ -- 420
-format.name$ -- 109
-if$ -- 1274
+cite$ -- 12
+duplicate$ -- 254
+empty$ -- 464
+format.name$ -- 119
+if$ -- 1405
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 11
-newline$ -- 58
-num.names$ -- 30
-pop$ -- 83
+int.to.str$ -- 12
+missing$ -- 12
+newline$ -- 63
+num.names$ -- 32
+pop$ -- 94
 preamble$ -- 1
-purify$ -- 61
+purify$ -- 68
 quote$ -- 0
-skip$ -- 182
+skip$ -- 205
 stack$ -- 0
-substring$ -- 375
-swap$ -- 101
-text.length$ -- 12
+substring$ -- 416
+swap$ -- 114
+text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 44
+type$ -- 48
 warning$ -- 0
-while$ -- 51
-width$ -- 13
-write$ -- 135
+while$ -- 55
+width$ -- 14
+write$ -- 146
 (There was 1 warning)
