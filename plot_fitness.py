@@ -4,13 +4,13 @@ __author__ = 'mariosky'
 from pylab import *
 import itertools, operator
 
-w16_file = open("w16-100-p512.dat")
-w28_file = open("w28-100-p512.dat")
-w32_file = open("w32-100-p512.dat")
+w16_file = open("w16-30-p512.dat")
+w28_file = open("w16-50-p512.dat")
+w32_file = open("w16-70-p512.dat")
 
-w16_records = [ map(float,line[:-1].split(",")) for line in w16_file if len(line.split(",")) > 3 ]
-w28_records = [ map(float,line[:-1].split(",")) for line in w28_file if len(line.split(",")) > 3 ]
-w32_records = [ map(float,line[:-1].split(",")) for line in w32_file if len(line.split(",")) > 3 ]
+w16_records = [ map(float,line.split(",")[:-2]) for line in w16_file if len(line.split(",")) > 3 ]
+w28_records = [ map(float,line.split(",")[:-2]) for line in w28_file if len(line.split(",")) > 3 ]
+w32_records = [ map(float,line.split(",")[:-2]) for line in w32_file if len(line.split(",")) > 3 ]
 
 w16_evaluations = []
 for key, group in itertools.groupby(w16_records, key=operator.itemgetter(0)):

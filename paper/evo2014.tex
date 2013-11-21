@@ -270,8 +270,17 @@ was assigned a return sample probability. In the experiments the lower
 probability was a 30\% chance of an EvoWorker returning a sample or
 an EvoWorker failing 70\% of the time; other return sample probabilities
 where 50\%, 70\% and 90\%. Experiments where carried out for 4, 
-8 and 16 EvoWorkers. A threshold of 128 individuals left in the popultaion
-A summary of the setup is presented in table~\ref{params}.
+8 and 16 EvoWorkers. In a pool based  asynchronous GAs there is usually no need 
+to wait for a worker´s job to start a new generation. Although supported by EvoSpace
+time outs were not chosen as triggers to feed the population with new
+individuals, the population size was used instead. We believe the population
+size is a better threshold as it is more critical to the GA performance. 
+In a previous work we found that when the population remaining in the pool 
+was near starvation, the time of completion was increased. For these 
+experiments, the insertion of individuals was triggered when less than 128
+individuals remain in the population; the number of individuals feed to the
+population was 128, or 8 samples when the re-insertion algorithm
+was used. A summary of the setup is presented in table~\ref{params}.
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.3}
@@ -297,21 +306,15 @@ Generations & 128 \\
 \hline
 PiCloud Worker Type & Realtime \\
 Number of Workers & 4,8,16 \\
-return sample probability & 30\%,50\%,90\% \\
+Return Sample Probability & 30\%,50\%,90\% \\
 Number of Executions & 30 \\
 
 \hline
 
 \end{tabular}
 \end{table}
-\subsection{Results}
-In this section, results from the experiments are discussed. 
-Figure~\ref{fig:plot_time_ri_w4} shows the time required 
-to solution when using four EvoWorkers. For a population of
-512 individuals and a sample size of 16 
 
-
-\begin{figure}[!t]
+\begin{figure}[t]
 \centering
 \includegraphics[width=3.5in]{eps/plot_time_CRS_w4.eps}
 \caption{Time required to solution, 4 Workers}
@@ -334,8 +337,59 @@ to solution when using four EvoWorkers. For a population of
 \label{fig:plot_time_ri_w16}
 \end{figure}
 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=3.5in]{eps/16_plot_evals.eps}
+\caption{Time required to solution, 16 Workers}
+\label{fig:plot_evals_w16}
+\end{figure}
+
+
+\subsection{Results}
+In this section, results from the experiments are discussed. 
+Figure~\ref{fig:plot_time_ri_w4} shows the time required 
+to solution when using four EvoWorkers. For a population of
+512 individuals and a sample size of 16, there is no
+difference in the time required to solution for 
+percentages of 50\% and above. Both re-insertion algorithms
+had comparable times. For 30 percent, both approaches 
+had slight increase in time. For 8 workers 
+(see Figure~\ref{fig:plot_time_ri_w8})  there was marginal
+decrease in overall time; and results where 
+similar to those found in the experiments with 4 workers.  
+Figure~\ref{fig:plot_time_ri_w16} shows results for 16 workers,
+when there was only a 30\% chance of returning a sample 
+the rate of re-insertions was high, approximately once every 35
+samples. In this case, the insertion of random individuals 
+resulted in a higher time to solution. For these experiments
+when there is not a high rate of re-insertion, both alternatives
+have similar results, but the re-insertion algorithm is better
+for situations when there are many starvation conditions. It appears
+that the insertion of random individuals is not detrimental when there
+are other evolved individuals in the pool. But when the remaining
+pool almost consists of random individuals, samples pulled by
+EvoWorkers need to start the search all over again. If then not many
+samples are returned to the pool, the work needed to reach an
+optimum is increased. Figure~\ref{fig:plot_evals_w16} also shows the number 
+of evaluations needed to reach an optimum again for 16 workers.
+
 \section{Conclusions and Further Work}
 \label{sec:conclusions}
+
+The re-insertion algorithm proposed for EvoSpace is a viable alternative
+to deal with a starving population in pool based GAs, and unreliable EvoWorkers.
+Using  a benchmark problem from the P-Peaks problem generator, 
+the approach was compared against the option of inserting  
+randomly generated individuals. The same parameters and computing resources
+were used when testing both algorithms with better times reported when
+using the proposed technique. For experiments where the population
+size is enough for the number of workers with their sample sizes, plus a 
+buffer to account for loss samples, then both algorithms could be used.
+However for cases when the number of EvoWorkers is unknown an hybrid approach
+could be used, insertion of random individuals to gradually increase the population
+size, and a re-insertion queue to handle lost samples. Further work could be
+focused on a hybrid approach, and also using heterogeneous computing resources. 
 
 
 %

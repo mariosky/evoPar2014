@@ -16,8 +16,7 @@ ax1 = fig.add_subplot(111)
 
 bp = plt.boxplot(times)
 
-ax1.yaxis.grid(True, linestyle='-', which='major', color='lightgrey',
-               alpha=0.5)
+ax1.yaxis.grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)
 
 ax1.set_axisbelow(True)
 ax1.set_title('Percentage of Returned Samples')

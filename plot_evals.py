@@ -5,7 +5,7 @@ from pylab import *
 import itertools, operator
 import os
 
-WORKERS = 'w4'
+WORKERS = 'w16'
 
 file_names = [file_name for file_name in os.listdir('.') if file_name.startswith(WORKERS) and file_name.endswith('p512.dat') ]
 opened_files = map(open, file_names)
