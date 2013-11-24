@@ -15,9 +15,9 @@
 
 
 \begin{document}
-\title{ Unreliable Heterogeneous Workers in EvoSpace }
+\title{ Unreliable Heterogeneous Workers in a pool-based evolutionary algorithm }
 %
-\titlerunning{Unreliable Heterogeneous Workers in EvoSpace}  % abbreviated title (for running head)
+%\titlerunning{Unreliable Heterogeneous Workers in EvoSpace}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
@@ -26,18 +26,19 @@
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-	In this paper the effect of node unavailability in algorithms using the 
-	EvoSpace population storage is assessed. EvoSpace is
-	a framework to develop evolutionary algorithms (EAs) using 
-	heterogeneous and unreliable resources. EvoSpace is based on Linda's tuple
+	In this paper the effect of node unavailability in algorithms using
+	EvoSpace, a pool-based evolutionary algorithm, is assessed. EvoSpace is
+	a framework for developing evolutionary algorithms (EAs) using 
+	heterogeneous and unreliable resources. It is based on Linda's tuple
 	space coordination model. The core elements of EvoSpace are a central 
-	repository for the evolving population and remote clients here called EvoWorkers
+	repository for the evolving population and remote clients, here called EvoWorkers,
 	which pull random samples of the population to perform on them the basic evolutionary
 	processes (selection, variation and survival), once the work is done, the
 	modified sample is pushed back to the central population. To address the problem 
 	of unreliable EvoWorkers, EvoSpace uses a simple re-insertion algorithm using copies of
 	samples stored in a global queue which also prevents the starvation of the population pool.
-	Using a benchmark problem from the P-Peaks problem generator we compared both approaches: 
+	Using a benchmark problem from the P-Peaks problem generator
+        we have compared two approaches: 
 	(i) the re-insertion of previous individuals at the cost of keeping copies of each sample, 
 	and a common approach of other pool based EAs, (ii) inserting  randomly generated
 	individuals. We found that EvoSpace is fault tolerant to highly unreliable resources and
@@ -78,7 +79,7 @@ This model contrasts with  the use of a global queue of tasks and
 implementations of map-reduce algorithms, recently favored in other proposals 
 \cite{fazenda2012,di2013towards,FlexGP}.
 Following the tuple space model, when individuals are pulled from the EvoSpace
-container these are removed from it, so that no other EvoWorker could work on them at same time .
+container these are removed from it, so that no other EvoWorker could work on them at same time.
 This design decision has several known benefits relevant to concurrency control 
 in distributed systems, and also is an effective way of distributing the
 workload. Leaving a copy of the individual in the population server free to
@@ -91,7 +92,8 @@ these samples could have a high cost. To address the problem of unreliable
 EvoWorkers, EvoSpace uses a simple re-insertion algorithm that also 
 prevents the starvation of the population pool. Other pool based algorithms
 normally use a random insertion technique, but we argue this could negatively 
-impact the outcome of the algorithm in some cases. 
+impact the outcome of the algorithm in some cases.  %Aquí aparece un
+                                %espacio muy grande en el PDF... - JJ
 
 This work evaluates the effect 
 of the re-insertion algorithm has on the total running time and number of evaluations 
@@ -143,7 +145,8 @@ tasks \cite{fazenda2012,di2013towards,FlexGP}.
  
 \section{EvoSpace}
 \label{sec:evo}
-EvoSpace consists of two main components (see figure~\ref{fig:evo}): (i) the EvoSpace 
+
+EvoSpace [{\em references hidden for blind review}] consists of two main components (see figure~\ref{fig:evo}): (i) the EvoSpace 
 container that stores the evolving population and (ii) EvoWorkers, which execute 
 the actual evolutionary process, while EvoSpace acts only as a population repository.
 In a basic configuration, EvoWorkers pull a small random subset of the 
@@ -170,16 +173,20 @@ Figure~\ref{fig:evo} illustrates the main components of EvoSpace.
 
 
 \subsection{Implementation}
-Populations of individuals are stored in-memory, using Redis a key-value database.
-Redis was chosen over a relational database system, or other non-SQL 
+Populations of individuals are stored in-memory, using Redis, a
+key-value database, which 
+ was chosen over a relational database system, or other non-SQL 
 alternatives, because it provides a hash based implementation of sets 
 and queues which are natural data structures for the EvoSpace model. 
 The logic of EvoSpace is implemented as a python module and exposed as a web 
 service using Cherrypy http library. The EvoSpace modules are available with 
-a Simplified BSD License from https://github.com/mariosky/EvoSpace. 
+a Simplified BSD License from 
+% https://github.com/mariosky/EvoSpace. 
+\url{anonymous URL}.
 
 \subsection{Evospace as a Heroku Application}
-Heroku is a multi-language PaaS, supporting among others
+
+Heroku (\url{http://heroku.com}) is a multi-language PaaS, supporting among others
 Ruby, Python and Java applications. The basic unit of composition on
 Heroku is a lightweight container running a single user-specified
 process. These containers, which they call {\em dynos}, can include web
@@ -194,12 +201,15 @@ CherryPy process.
 
 This model is very different from a VPS where users pay for the
 whole server; in a process based model, users pay only for the
-processes they need.
+processes they need; being a {\em freemium} model means also that, if
+a minimum level of resources is not exceeded, it can be used for
+free. 
 
 Once deployed the web process can be scaled up by assigning more dynos;
 in our case and in the more demanding configurations of our experiments, 
 the web process was scaled to 20 dynos. Instructions and code for deployment 
-is available at \url{http://www.evospace.org/software.html}
+is available at \url{http://www.evospace.org/software.html} % Tienes
+                                % que anonimizarlo tamibén - JJ
 
 \subsection{Evoworkers as PiCloud Jobs}
 PiCloud is a Platform as a Service (PaaS), with deep Python integration; 
@@ -213,7 +223,10 @@ latency and a high bandwidth communication between the services,
 and there is no charge for data transfer costs between both services.
 For the experiments type c1 and c2 Real Time workers where used.  
 The code for the EvoWorkers implementation and experiment data is publicly available 
-from a github repository \url{http://goo.gl/92tMFw}.
+from a github repository \url{hidd.en}. 
+% \url{http://goo.gl/92tMFw}. % Github tiene su
+                                % propio acortador, pero también
+                                % tienes que anonimizarlo - JJ 
 
 \section{Experimental work}
 \label{sec:experiments}
@@ -320,7 +333,9 @@ Number of Executions & 30 \\
 \caption{Time required to solution, 4 Workers}
 \label{fig:plot_time_ri_w4}
 \end{figure}
-
+%Quizás deberías poner los random para el mismo número de
+%eliminaciones al lado de reinsert, 30, 30, 50, 50 y así
+%sucesivamente, sería más fácil compararlos. 
 
 \begin{figure}[!t]
 \centering
@@ -369,10 +384,24 @@ for situations when there are many starvation conditions. It appears
 that the insertion of random individuals is not detrimental when there
 are other evolved individuals in the pool. But when the remaining
 pool almost consists of random individuals, samples pulled by
-EvoWorkers need to start the search all over again. If then not many
-samples are returned to the pool, the work needed to reach an
+EvoWorkers need to start the search all over again. If not many
+samples are then returned to the pool, the work needed to reach an
 optimum is increased. Figure~\ref{fig:plot_evals_w16} also shows the number 
 of evaluations needed to reach an optimum again for 16 workers.
+
+% Podrías comparar también el resultado para un porcentaje
+% determinado, 90 y 30 para todos los números de workers y
+% discutirlo. Es presentar los datos de otra forma solamente - JJ
+
+% Quizás también presentar como evoluciona el fitness en función del
+% tiempo para los dos tipos de reinserciones y para el mínimo y máximo
+% porcentaje de reinserción, para que se vea en qué fase del algoritmo
+% influye más, principio o final o qué. Yo creo que al principio
+% variará poco si es random o reinsertado - JJ 
+
+% Habría que extender más esta sección de resultados y añadir algo de
+% discusión. Al final queda un poco débil y va a ser difícil que lo
+% admitan coo trabajo, sólo como póster. - JJ
 
 \section{Conclusions and Further Work}
 \label{sec:conclusions}
@@ -391,6 +420,9 @@ could be used, insertion of random individuals to gradually increase the populat
 size, and a re-insertion queue to handle lost samples. Further work could be
 focused on a hybrid approach, and also using heterogeneous computing resources. 
 
+\section{Acknowledgements}
+
+Hidden for double-blind review. 
 
 %
 % ---- Bibliography ----
