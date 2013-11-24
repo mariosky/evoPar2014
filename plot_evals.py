@@ -35,7 +35,7 @@ ax1.yaxis.grid(True, linestyle='-', which='major', color='lightgrey',
 # Hide these grid behind plot objects
 ax1.set_axisbelow(True)
 ax1.set_title('Evaluations to solution. 512 peaks/256 bits')
-ax1.set_xlabel('%s Workers' % (WORKERS[1:]))
+ax1.set_xlabel('%s Workers, Re-Insert (left)   Random (right)' % (WORKERS[1:]))
 ax1.set_ylabel('Number of evaluations')
 
 xtickNames = plt.setp(ax1, xticklabels= [f.split('-')[1] for f in file_names] )

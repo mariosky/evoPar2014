@@ -4,7 +4,7 @@ __author__ = 'mariosky'
 from pylab import *
 import itertools, operator
 
-w16_file = open("w16-30-p512.dat")
+w16_file = open("w16a-30-p512.dat")
 w28_file = open("w16-50-p512.dat")
 w32_file = open("w16-70-p512.dat")
 

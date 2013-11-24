@@ -66,7 +66,7 @@ connections, low bandwidth communications, abandoned work, security and privacy
 issues are all common in these settings. 
 
 In this paper the effect of node unavailability in algorithms using the 
-EvoSpace population storage is assessed. EvoSpace \cite{Evospace,FreeLunch} is
+EvoSpace population storage is assessed. EvoSpace [{\em references hidden for blind review}] is
 a framework to develop evolutionary algorithms (EA) using 
 heterogeneous and unreliable resources. EvoSpace is based on Linda's tuple
 space \cite{Evospace} coordination model, where each node asynchronously
@@ -208,8 +208,11 @@ free.
 Once deployed the web process can be scaled up by assigning more dynos;
 in our case and in the more demanding configurations of our experiments, 
 the web process was scaled to 20 dynos. Instructions and code for deployment 
-is available at \url{http://www.evospace.org/software.html} % Tienes
+is available at \url{anonymous URL} % Tienes
                                 % que anonimizarlo tamibén - JJ
+%http://www.evospace.org/software.html
+
+
 
 \subsection{Evoworkers as PiCloud Jobs}
 PiCloud is a Platform as a Service (PaaS), with deep Python integration; 
@@ -223,7 +226,7 @@ latency and a high bandwidth communication between the services,
 and there is no charge for data transfer costs between both services.
 For the experiments type c1 and c2 Real Time workers where used.  
 The code for the EvoWorkers implementation and experiment data is publicly available 
-from a github repository \url{hidd.en}. 
+from a github repository \url{anonymous URL}. 
 % \url{http://goo.gl/92tMFw}. % Github tiene su
                                 % propio acortador, pero también
                                 % tienes que anonimizarlo - JJ 
@@ -333,9 +336,12 @@ Number of Executions & 30 \\
 \caption{Time required to solution, 4 Workers}
 \label{fig:plot_time_ri_w4}
 \end{figure}
+
 %Quizás deberías poner los random para el mismo número de
 %eliminaciones al lado de reinsert, 30, 30, 50, 50 y así
 %sucesivamente, sería más fácil compararlos. 
+%% Hecho, Mario
+
 
 \begin{figure}[!t]
 \centering
@@ -353,11 +359,39 @@ Number of Executions & 30 \\
 \end{figure}
 
 
-\begin{figure}[t]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{eps/16_plot_evals.eps}
-\caption{Time required to solution, 16 Workers}
+\caption{Number of evaluations needed to solution, 16 Workers}
 \label{fig:plot_evals_w16}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{eps/plot_percent_90.eps}
+\caption{Time required to solution, 90\% of returned samples}
+\label{fig:plot_percent_90}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{eps/plot_percent_30.eps}
+\caption{Time required to solution, 30\% of returned samples}
+\label{fig:plot_percent_30}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{eps/Fitness-w16-30-random.eps}
+\caption{Fitness by Sample number, 30\% of returned samples, 16 Workers, Random Algorithm}
+\label{fig:Fitness-w16-30-random}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{eps/Fitness-w16-30-reinsert.eps}
+\caption{Fitness by Sample number, 30\% of returned samples, 16 Workers, Re-Insert Algorithm}
+\label{fig:Fitness-w16-30-reinsert}
 \end{figure}
 
 
@@ -384,14 +418,38 @@ for situations when there are many starvation conditions. It appears
 that the insertion of random individuals is not detrimental when there
 are other evolved individuals in the pool. But when the remaining
 pool almost consists of random individuals, samples pulled by
-EvoWorkers need to start the search all over again. If not many
-samples are then returned to the pool, the work needed to reach an
+EvoWorkers need to start the search all over again. 
+If not many samples are then returned to the pool, the work needed to reach an
 optimum is increased. Figure~\ref{fig:plot_evals_w16} also shows the number 
 of evaluations needed to reach an optimum again for 16 workers.
+Figures~\ref{fig:plot_percent_90} and \ref{fig:plot_percent_30} show
+the time required to solution for 30 and 90 percent of returned samples.
+For 90\% both algorithms had similar speedups when incrementing the number of
+workers. The marginal speedup obtained for these experiments is related to 
+the population size, but this parameter was not changed. For 30\% 
+there was practically no speedup at all. The re-insert algorithm
+although not significant, had consistent decrease in time.         
+
+Fitness by time was measured as the average from each consecutive
+sample pulled by each worker. For each sample the average fitness
+was measured at the start and at the end of the local evolution.
+Also the minimum and maximum fitness values at start and finish was 
+recorded. Final fitness values are shown in double width lines in figures.
+Readings used for these figures include all samples, including
+those that where not returned.   
+Figure~\ref{fig:Fitness-w16-30-random} shows fitness by time
+for the random insertion algorithm, as expected initial fitness drops
+at certain points, when random insertion occurs. Average final fitness 
+is affected by random insertions.Figure~\ref{fig:Fitness-w16-30-reinsert}
+shows results for the re-insertion algorithm, with more
+characteristic curves for this type of algorithms. 
+ 
+ 
 
 % Podrías comparar también el resultado para un porcentaje
 % determinado, 90 y 30 para todos los números de workers y
 % discutirlo. Es presentar los datos de otra forma solamente - JJ
+%% Hecho, Mario
 
 % Quizás también presentar como evoluciona el fitness en función del
 % tiempo para los dos tipos de reinserciones y para el mínimo y máximo
@@ -401,7 +459,7 @@ of evaluations needed to reach an optimum again for 16 workers.
 
 % Habría que extender más esta sección de resultados y añadir algo de
 % discusión. Al final queda un poco débil y va a ser difícil que lo
-% admitan coo trabajo, sólo como póster. - JJ
+% admitan como trabajo, sólo como póster. - JJ
 
 \section{Conclusions and Further Work}
 \label{sec:conclusions}
